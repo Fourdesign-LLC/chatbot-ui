@@ -4,25 +4,6 @@ import { NextResponse, type NextRequest } from "next/server"
 import i18nConfig from "./i18nConfig"
 
 export async function middleware(request: NextRequest) {
-  const basicAuth = request.headers.get('authorization');
-  const url = request.nextUrl;
-
-  if (basicAuth) {
-    const authValue = basicAuth.split(' ')[1] ?? '';
-    const [user, pwd] = atob(authValue).split(':');
-
-    if (
-      user === "fourdesign" &&
-      pwd === "fd-chat"
-    ) {
-      return NextResponse.next();
-    }
-  } else {
-    url.pathname = '/api/basic-auth';
-    return NextResponse.rewrite(url);
-  }
-
-
   const i18nResult = i18nRouter(request, i18nConfig)
   if (i18nResult) return i18nResult
 
@@ -61,5 +42,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/:path*'],
-};
+  matcher: "/((?!api|static|.*\\..*|_next|auth).*)"
+}
