@@ -10,6 +10,7 @@ import { Inter } from "next/font/google"
 import { cookies } from "next/headers"
 import { ReactNode } from "react"
 import "./globals.css"
+import Head from "next/head"
 
 const inter = Inter({ subsets: ["latin"] })
 const APP_NAME = "Chatbot UI"
@@ -57,6 +58,10 @@ export const metadata: Metadata = {
       template: APP_TITLE_TEMPLATE
     },
     description: APP_DESCRIPTION
+  },
+  robots: {
+    index: false,
+    follow: false
   }
 }
 
@@ -88,6 +93,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
+      <Head>
+        <meta name="robots" content="noindex" />
+        <meta name="googlebot" content="noindex" />
+      </Head>
       <body className={inter.className}>
         <Providers attribute="class" defaultTheme="dark">
           <TranslationsProvider
